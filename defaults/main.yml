@@ -32,6 +32,8 @@ package_list:
 
 #pdf utils location
 source_loc: '/etc/ansible/playbooks/httpd/files'
+############# to download source
+
 
 #destination directory
 dest_dir: '/usr/local'
@@ -54,6 +56,3 @@ httpd_version: 'httpd-2.4.23'
 
 #Mod-sec
 dest_build: '/usr/build'
-apr_conf: '{{ source_loc }}/apr_runToConfigure.sh'
-apr_util_conf: '{{ source_loc }}/apr-util_runToConfigure.sh'
-httpd_conf: '{{ source_loc }}/httpd_runToConfigure.sh'
