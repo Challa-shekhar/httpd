@@ -33,15 +33,15 @@
 #extracting to build directories
 - name: extracting apr, apr utils, httpd to build directory
   unarchive: 
-       src: '{{ item.tar }}'
+       src: '{{ item.url }}'
        dest: '{{ dest_build }}/{{ item.dir }}'
        remote_src: no
-       owner: {'{ user }}'
+       owner: '{{ user }}'
        group: '{{ group }}'
   with_items: 
-       - { tar: '{{ apr }}',      dir: 'apr'}
-       - { tar: '{{ apr_util }}', dir: 'apr_util'}
-       - { tar: '{{ httpd }}',    dir: 'apache'}
+       - { url: '{{ apr }}',      dir: 'apr'}
+       - { url: '{{ apr_util }}', dir: 'apr_util'}
+       - { url: '{{ httpd }}',    dir: 'apache'}
   become: yes
 
 ######################## Installing APR
