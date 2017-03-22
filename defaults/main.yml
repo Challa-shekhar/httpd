@@ -30,14 +30,14 @@ package_list:
  - "glibc-devel"
  - "compat-libstdc++-33"
 
-#pdf utils location
-source_loc: '/etc/ansible/playbooks/httpd/files'
+#pdf utils location if files downloaded to network location
+source_loc: 'XXX FAkePATH XXX'
 ############# to download source
-httpd_package: 'http://www-us.apache.org/dist//httpd/{{ httpd_version }}.tar.gz'
+httpd: 'http://www-us.apache.org/dist//httpd/{{ httpd_version }}.tar.gz'
 
-apr_package: 'http://www-us.apache.org/dist//apr/{{ apr_version }}.tar.gz'
+apr: 'http://www-us.apache.org/dist//apr/{{ apr_version }}.tar.gz'
 
-apr_util_package: 'http://www-us.apache.org/dist//apr/{{ apr_util_version }}.tar.gz'
+apr_util: 'http://www-us.apache.org/dist//apr/{{ apr_util_version }}.tar.gz'
 
 #destination directory
 dest_dir: '/usr/local'
@@ -47,15 +47,12 @@ user: 'test'
 group: 'test'
 
 # APR
-apr: '{{ source_loc }}/{{ apr_version }}.tar.gz'
 apr_version: 'apr-1.5.2'
 
 # APR-UTIl
-apr_util: '{{ source_loc }}/{{ apr_util_version }}.tar.gz'
 apr_util_version: 'apr-util-1.5.4'
 
 # Httpd
-httpd: '{{ source_loc }}/{{ httpd_version }}.tar.gz'
 httpd_version: 'httpd-2.4.23'
 
 #Mod-sec
