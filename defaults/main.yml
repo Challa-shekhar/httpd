@@ -1,7 +1,7 @@
 ---
 # defaults file for httpd
 ###################################################################
-# Vars being used in the Httpd.yml
+# Vars being used in the httpd
 ###################################################################
 #Package lists
 package_list:
@@ -33,7 +33,11 @@ package_list:
 #pdf utils location
 source_loc: '/etc/ansible/playbooks/httpd/files'
 ############# to download source
+httpd_package: 'http://www-us.apache.org/dist//httpd/{{ httpd_version }}.tar.gz'
 
+apr_package: 'http://www-us.apache.org/dist//apr/{{ apr_version }}.tar.gz'
+
+apr_util_package: 'http://www-us.apache.org/dist//apr/{{ apr_util_version }}.tar.gz'
 
 #destination directory
 dest_dir: '/usr/local'
@@ -43,15 +47,15 @@ user: 'test'
 group: 'test'
 
 # APR
-apr: '{{ source_loc }}/apr-1.5.2.tar.gz'
+apr: '{{ source_loc }}/{{ apr_version }}.tar.gz'
 apr_version: 'apr-1.5.2'
 
 # APR-UTIl
-apr_util: '{{ source_loc }}/apr-util-1.5.4.tar.gz'
+apr_util: '{{ source_loc }}/{{ apr_util_version }}.tar.gz'
 apr_util_version: 'apr-util-1.5.4'
 
 # Httpd
-httpd: '{{ source_loc }}/httpd-2.4.23.tar.gz'
+httpd: '{{ source_loc }}/{{ httpd_version }}.tar.gz'
 httpd_version: 'httpd-2.4.23'
 
 #Mod-sec
