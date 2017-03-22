@@ -1,2 +1,59 @@
 ---
 # defaults file for httpd
+###################################################################
+# Vars being used in the Httpd.yml
+###################################################################
+#Package lists
+package_list:
+ - "openssl"
+ - "openssl-devel"
+ - "gcc"
+ - "gcc-c++"
+ - "libgcc"
+ - "libstdc++"
+ - "libstdc++-devel"
+ - "libcurl"
+ - "libcurl-devel"
+ - "perl"
+ - "perl-devel"
+# - "krb5"
+ - "krb5-devel"
+ - "expat"
+ - "expat-devel"
+ - "pcre"
+ - "pcre-devel"
+ - "zlib"
+ - "zlib-devel"
+ - "libxml2"
+ - "libxml2-devel"
+ - "glibc"
+ - "glibc-devel"
+ - "compat-libstdc++-33"
+
+#pdf utils location
+source_loc: '/etc/ansible/playbooks/httpd/files'
+
+#destination directory
+dest_dir: '/usr/local'
+
+#user details
+user: 'test'
+group: 'test'
+
+# APR
+apr: '{{ source_loc }}/apr-1.5.2.tar.gz'
+apr_version: 'apr-1.5.2'
+
+# APR-UTIl
+apr_util: '{{ source_loc }}/apr-util-1.5.4.tar.gz'
+apr_util_version: 'apr-util-1.5.4'
+
+# Httpd
+httpd: '{{ source_loc }}/httpd-2.4.23.tar.gz'
+httpd_version: 'httpd-2.4.23'
+
+#Mod-sec
+dest_build: '/usr/build'
+apr_conf: '{{ source_loc }}/apr_runToConfigure.sh'
+apr_util_conf: '{{ source_loc }}/apr-util_runToConfigure.sh'
+httpd_conf: '{{ source_loc }}/httpd_runToConfigure.sh'
