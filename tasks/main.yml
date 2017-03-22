@@ -1,2 +1,111 @@
 ---
 # tasks file for httpd
+- name: installing epel repos
+  yum: 
+    name: http://download.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm 
+    state: present
+  become: yes
+
+### updating yum
+- name: updating yum
+  yum: name=* state=latest
+  become: yes
+
+### installing dependencies
+- name: installing all the dependent packages
+  yum: 
+    name: '{{ item }}' 
+    state: present
+  with_items: '{{ package_list }}'
+  become: yes
+
+# creating other directories
+- name: creating directories inside build
+  file: 
+      path: /usr/build/{{ item }}
+      state: directory
+      mode: 0755
+  with_items:
+       - 'apr'
+       - 'apr_util'
+       - 'apache'
+
+#extracting to build directories
+- name: extracting apr, apr utils, httpd to build directory
+  unarchive: 
+       src: '{{ item.tar }}'
+       dest: '{{ dest_build }}/{{ item.dir }}'
+       remote_src: no
+       owner: {'{ user }}'
+       group: '{{ group }}'
+  with_items: 
+       - { tar: '{{ apr }}',      dir: 'apr'}
+       - { tar: '{{ apr_util }}', dir: 'apr_util'}
+       - { tar: '{{ httpd }}',    dir: 'apache'}
+  become: yes
+
+######################## Installing APR
+#configuring apr
+- name: configuring apr
+  command: ./configure --prefix=/usr/local/apr-httpd/
+  args:
+   chdir: '{{ dest_build }}/apr/{{ apr_version }}'
+  become: yes
+
+#compiling apr
+- name: compiling apr
+  command: make
+  args:
+   chdir: '{{ dest_build }}/apr/{{ apr_version }}'
+  become: yes
+
+## installing apr
+- name: installing apr
+  command: make install
+  args:
+   chdir: '{{ dest_build }}/apr/{{ apr_version }}'
+  become: yes
+  
+  ###################### Installing APR-Utils
+  #configuring apr-util
+- name: configuring apr-util
+  command: ./configure --with-apr=/usr/local/apr-httpd/ --prefix=/usr/local/apr-util-httpd/
+  args:
+   chdir: '{{ dest_build }}/apr_util/{{ apr_util_version }}'
+  become: yes
+
+#compiling apr-util
+- name: compiling apr-util
+  command: make
+  args:
+   chdir: '{{ dest_build }}/apr_util/{{ apr_util_version }}'
+  become: yes
+
+## installing apr-util
+- name: installing apr-util
+  command: make install
+  args:
+   chdir: '{{ dest_build }}/apr_util/{{ apr_util_version }}'
+  become: yes
+
+########################### Installing Httpd
+#configuring httpd
+- name: configuring httpd
+  command: ./configure --with-apr=/usr/local/apr-httpd/ --with-apr-util=/usr/local/apr-util-httpd/ --with-ssl --enable-proxy=shared --enable-ssl --enable-mods-shared=all --enable-so CC=gcc
+  args:
+   chdir: '{{ dest_build }}/apache/{{ httpd_version }}'
+  become: yes
+
+#compiling httpd
+- name: compiling httpd
+  command: make
+  args:
+   chdir: '{{ dest_build }}/apache/{{ httpd_version }}'
+  become: yes
+
+## installing httpd
+- name: installing httpd
+  command: make install
+  args:
+   chdir: '{{ dest_build }}/apache/{{ httpd_version }}'
+  become: yes
